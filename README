@@ -1,0 +1,47 @@
+This REST application is developed using Spring boot. We can run the application in two modes namely dev
+mode and prod mode.
+1. Dev mode is default, to run the application we need to run in command prompt. Runs the application using
+   in memory DB called H2.
+      mvn spring-boot:run
+   This will start the server in port 8090.
+
+2. In prod mode, we need to pass extra argument along with above command.
+     -Dspring-boot.run.profiles=prod
+   This will start the server in port 8085. This requires MySQL Schema 'springbootdb' in local DB.
+   Try to match the details as shown in properties file. We don't need to create table upfront.
+
+
+The application can be tested using Postman tool or so.
+
+POST --http://localhost:8090/product
+           use sample JSON {"unitPrice": 700,"name" : "Washing Machine","quantity": "3"}
+
+GET -- http://localhost:8090/product
+GET -- http://localhost:8090/product/Washing Machine
+
+
+There are Junits as well created for this application, which can be found in test folder.
+
+After installing MySQL.
+
+mysql> create database springbootdb;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use springbootdb;
+Database changed
+
+mysql> SELECT CURRENT_USER();
++----------------+
+| CURRENT_USER() |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from Inventory_Table;
++----+-----------------+----------+------------+
+| id | name            | quantity | unit_price |
++----+-----------------+----------+------------+
+|  1 | Washing Machine |        3 |        700 |
++----+-----------------+----------+------------+
+1 row in set (0.00 sec)
